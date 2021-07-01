@@ -28,6 +28,8 @@
   const btnConformTake = document.querySelector("#btn-conform-take");
   const curDirDisplay = document.querySelector("#currentDirectoryName");
 
+  const numberOfFramesSelect = document.querySelector("#number-of-frames-select")
+
   /** Represents a project (a series of takes) */
   class Project {
     /**
@@ -45,6 +47,8 @@
       this.streaming = false;
       this.title = title;
       this.takes = [];
+
+      this.numberOfFramesToCapture = numberOfFramesSelect.value; 
 
       console.log(`Created new project: ${this.title}`);
     }
@@ -80,9 +84,16 @@
         self.currentTake.onionSkin.setVisibility(false);
       });
 
+      // Change Number of Frames Selected 
+      numberOfFramesSelect.addEventListener("change", function() {
+        self.numberOfFramesToCapture = numberOfFramesSelect.value; 
+      })
+
       // Capture a frame
-      btnCaptureFrame.addEventListener("click", function () {
-        self.takeFrame();
+      btnCaptureFrame.addEventListener("click", function () { 
+        for (let i = 1; i <= self.numberOfFramesToCapture; i++) {
+          self.takeFrame();
+        }
       });
 
       // Undo last captured frame
